@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DELISH</title>
+</head>
+<body>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #B5C0D0;
+        }
+        
+
+
+        .pan img{
+            height: 600px;
+            width: 300px;
+            border-radius: 10px;
+        }
+
+    
+
+        .pan {
+        position: relative;
+        text-align: center;
+    }
+    .pan img {
+        width: 300px; /* Adjust this as per your image size */
+        display: block;
+        margin: 0 auto;
+        border: 5px solid black; /* Thick black border */
+        border-radius: 10px;
+    }
+    #rzp-button1 {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #9CAFAA;
+    border: none;
+    color: white;
+    padding: 9px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2px;
+}
+    #rzp-button1:hover {
+        background-color: #31363F;
+    }
+    </style>
+    </head>
+    <body>
+
+
+    <div class="pan">
+        <img src="static/img/bac.jpeg" alt="Your Photo">
+        <button id="rzp-button1">Pay with Razorpay</button>
+    </div>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "rzp_test_22YpxagEoYtImx", // Enter the Key ID generated from the Dashboard
+    "amount": "{{ pdata[0] }}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "THE INDIAN BARISTO",
+    "description": "Test Transaction",
+    "image": "static/img/logo.jpg",
+    "order_id": "{{ pdata[1] }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "callback_url": "/success",
+    "prefill": {
+        "name": "DELISH",
+        "email": "hotel.delish@gmail.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#5cffab"
+    }
+};
+
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+</body>
+</html>
+

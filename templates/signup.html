@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DELISH</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&family=Oswald:wght@600&display=swap" rel="stylesheet">
+   
+    <script>
+        function showMessage(message) {
+            alert(message);
+        }
+    </script>
+  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/log1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/log2.css') }}">
+    
+    
+</head>
+<body>    
+    <!-- Intro -->
+    <div id="intro" class="parallax-window" data-parallax="scroll" data-image-src="static/img/signup.jpg">
+        <div class="container">
+
+        <div class="container mx-auto px-2 tm-intro-width">
+            <div class="sm:pb-60 sm:pt-48 py-20">
+                <div class="bg-black bg-opacity-70 p-12 mb-5 text-center">
+                    <h1 class="text-white text-5xl tm-logo-font mb-5">DELISH</h1>
+                    <p class="tm-text-gold tm-text-2xl">where every bite tells a story!</p>
+                    <div class="Login"><button id="loginBtn">SIGNUP</button></div>
+                    <div class="login-container hidden" id="loginContainer">
+                       
+                        <form action="/signup" method="post">
+                            <label for="username">Username:</label><br>
+                            <input type="text" id="username" name="username"><br>
+                            <label for="password">Password:</label><br>
+                            <input type="password" id="password" name="password"><br>
+                            <label for="street">Street Name:</label><br>
+                            <input type="text" id="street" name="street"><br>
+                            <label for="email">Email:</label><br>
+                            <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required><br>
+                             <!-- The 'pattern' attribute specifies the regex pattern for email validation -->
+                            <label for="pincode">Pincode:</label><br>
+                            <input type="text" id="pincode" name="pincode"><br>
+                            <label for="phone">Phone Number:</label><br>
+                            <input type="text" id="phone" name="phone"><br>
+                            <button type="submit">Signup</button>
+                            <p>Already have a acount <a href="/">sign IN!</a></p>
+                        </form>
+                        
+                    </div>
+                </div>                                         
+            </div>
+        </div>        
+    </div>
+
+
+    <script src="script.js"></script>
+</div>
+</div>        
+</div>
+
+<script>
+    // Function to validate the entire form
+    function validateForm() {
+        var username = document.getElementById("username").value;
+        var phone = document.getElementById("phone").value;
+        var pincode = document.getElementById("pincode").value;
+
+        // Validate phone number and pincode
+        var phone_valid = phone.match(/^\d+$/);
+        var pincode_valid = pincode.match(/^\d+$/);
+
+        // If phone number is invalid, show alert
+        if (!phone_valid) {
+            showMessage("Phone number must contain only numeric characters.");
+            return false;
+        }
+
+        // If pincode is invalid, show alert
+        if (!pincode_valid) {
+            showMessage("Pin code must contain only numeric characters.");
+            return false;
+        }
+
+        // Additional checks if needed
+
+        return true;
+    }
+</script>
+    
+    {% if username_exists %}
+       <script>showMessage("Username already exists! Please choose a different username.");</script> 
+    {% endif %}
+
+    
+    {% if phone_invalid %}
+      <script>showMessage("Phone number must contain only numeric characters.");</script>  
+    {% endif %}
+
+   
+    {% if pincode_invalid %}
+         <script>showMessage("Pin code must contain only numeric characters.");</script> 
+    {% endif %}
+
+
+    <script src="{{ url_for('static', filename='js/log1.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/log2.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/log3.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/log4.js') }}"></script>
+    <script>
+
+        function checkAndShowHideMenu() {
+            if(window.innerWidth < 768) {
+                $('#tm-nav ul').addClass('hidden');                
+            } else {
+                $('#tm-nav ul').removeClass('hidden');
+            }
+        }
+
+        $(function(){
+            var tmNav = $('#tm-nav');
+            tmNav.singlePageNav();
+
+            checkAndShowHideMenu();
+            window.addEventListener('resize', checkAndShowHideMenu);
+
+            $('#menu-toggle').click(function(){
+                $('#tm-nav ul').toggleClass('hidden');
+            });
+
+            $('#tm-nav ul li').click(function(){
+                if(window.innerWidth < 768) {
+                    $('#tm-nav ul').addClass('hidden');
+                }                
+            });
+
+            $(document).scroll(function() {
+                var distanceFromTop = $(document).scrollTop();
+
+                if(distanceFromTop > 100) {
+                    tmNav.addClass('scroll');
+                } else {
+                    tmNav.removeClass('scroll');
+                }
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

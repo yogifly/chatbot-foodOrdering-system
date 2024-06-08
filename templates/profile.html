@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sedan+SC&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <title>User Profile and Review</title>
+    <style>
+        /* Add some basic CSS for styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            font-family: "Bebas Neue", sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+            font-style: normal;
+            background-color: #B5C0D0;
+            overflow: hidden;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 40px; /* Optional: add some padding to the right */
+        }
+        .navbar a {
+            font-family: "Bebas Neue", sans-serif;
+            font-weight: 500;
+            font-size: 20px;
+            font-style: normal;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+        .dropdown .dropbtn {
+            font-size: 20px;  
+            border: none;
+            outline: none;
+            color: black;
+            padding: 14px 20px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        .navbar a:hover, .dropdown:hover .dropbtn {
+            background-color: grey;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            z-index: 1;
+        }
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: grey;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        table {
+            display: none; /* Hide the table initially */
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        .review-form, .address-container {
+            
+            display: none;
+            margin-top: 20px;
+        }
+        .rating {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+            display: inline-block;
+        }
+        .rating > input {
+            display: none;
+        }
+        .rating > label {
+            position: relative;
+            width: 1em;
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+        }
+        .rating > label:before {
+            content: '\2605';
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.2s linear;
+        }
+        .rating > label:hover:before,
+        .rating > label:hover ~ label:before,
+        .rating > input:checked ~ label:before {
+            opacity: 1;
+            color: orange; /* Change color to orange */
+        }
+
+        /* Additional CSS for review container */
+        .review-container {
+            font-family: "Sedan SC", serif;
+            border: 2px solid #110404; 
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            margin: auto;
+        }
+
+        
+
+
+
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .star {
+            font-size: 30px;
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.2s;
+        }
+        .star:hover,
+        .star.selected {
+            color: #ffcc00;
+        }
+        #review-text {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+          
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+        #submit-review {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #submit-review:hover {
+            background-color: #218838;
+        }
+
+        #welcome-heading {
+            background-image: url("{{ url_for('static', filename='img/finalprofile.png') }}");
+            color: white;
+            padding: 100px;
+            height: 300px;
+            font-size: 80px;
+            background-repeat: no-repeat;
+            background-position: right;
+            width: 100%;
+            background-color: black;
+            overflow-x: hidden; /* Prevents horizontal overflow */
+            box-sizing: border-box; /* Ensures padding is included in the width */
+            margin: 0;
+            font-family: "Sedan SC", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .reviews-container {
+            display: none; /* Hide the reviews container initially */
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .review-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 200px; /* Fixed height for uniformity */
+            width: calc(33.33% - 20px); /* Ensures 3 cards per row with gap */
+        }
+
+        .user-review {
+            margin-bottom: 20px; /* Margin to separate from grid */
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .username {
+            font-family: "Sedan SC", serif;
+            font-weight: bold;
+            color: #333;
+            font-size: 30px
+        }
+
+        .stars {
+            display: flex;
+        }
+
+        .star {
+            font-size: 20px;
+            color: orangered
+        }
+
+        .review-text {
+            font-family: "Merriweather", serif;
+            color: #555;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 6; /* Limits the number of lines */
+            -webkit-box-orient: vertical;
+        }
+
+        .reviews-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Adds space between the cards */
+        }
+
+        .address-container {
+        
+        border-collapse: collapse;
+    }
+
+    .address-info {
+        
+        background-color: #F2F1EB;
+        border-bottom: 1px solid rgb(132, 127, 127);
+        padding: 10px;
+    }
+
+    .address-container {
+        border: 2px solid black;
+        padding: 10px;
+    }
+
+    
+    .address-info {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .address-info h2 {
+        margin: 0;
+        position: absolute;
+        top: 0;
+    }
+
+    .address-info p {
+        font-size: 25px;
+        font-family: "Rubik", sans-serif;
+        margin: 0;
+        margin-left: 200px;
+        margin-bottom: 3px;
+
+    }
+   body {
+    background-image: url('static/img/nothing.avif');
+    background-size: 100px 100px; /* Adjust the size as needed */
+    background-repeat: no-repeat;
+    background-position: center 85%; /* Position it below the middle */
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="navbar">
+        <a href="/index">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">options</button>
+            <div class="dropdown-content hidden" id="dropdown-content">
+                <a href="#" onclick="showReviewForm()">Write a Review</a>
+                <a href="#" onclick="showReviews()">Review</a>
+                <a href="#" onclick="showOrders()">Previous Orders</a>
+                <a href="#" onclick="showAddresses()">Addresses</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+        
+    </div>
+
+    <h1 id="welcome-heading">Welcome, {{ username }}!</h1>
+
+    
+
+    <table id="orders">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Timestamp</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order[0] }}</td>
+                <td>{{ order[1] }}</td>
+                <td>{{ order[2] }}</td>
+                <td>{{ order[3] }}</td>
+                <td>{{ order[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="review-form" id="review-form">
+        <div class="review-container">
+            <h2>Write a Review</h2>
+            <form action="/review" method="POST" id="review-form">
+                <div class="stars" id="star-rating">
+                    <span class="star" data-rating="1">&#9733;</span>
+                    <span class="star" data-rating="2">&#9733;</span>
+                    <span class="star" data-rating="3">&#9733;</span>
+                    <span class="star" data-rating="4">&#9733;</span>
+                    <span class="star" data-rating="5">&#9733;</span>
+                </div>
+                <input type="hidden" name="rating" id="rating">
+                <textarea id="review-text" name="review" placeholder="Write your review here..."></textarea>
+                <button id="submit-review" type="submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const stars = document.querySelectorAll('.star');
+    
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const rating = this.getAttribute('data-rating');
+                    document.getElementById('rating').value = rating;
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= parseInt(rating)) {
+                            s.classList.add('selected');
+                        } else {
+                            s.classList.remove('selected');
+                        }
+                    });
+                });
+            });
+        });
+
+       
+    </script>
+    
+    <div class="address-container" id="address-container">
+        <div class="address-info">
+            <h2>Street Address:</h2>
+            <p>{{ street }}</p>
+        </div>
+        <div class="address-info">
+            <h2>Email:</h2>
+            <p>{{ email }}</p>
+        </div>
+        <div class="address-info">
+            <h2>Phone Number:</h2>
+            <p>{{ phone }}</p>
+        </div>
+        <div class="address-info">
+            <h2>Pincode:</h2>
+            <p>{{ pincode }}</p>
+        </div>
+    </div>
+
+
+    <div class="reviews-container" id="reviews-container">
+        {% if reviews %}
+            <div class="reviews-grid">
+                {% for review in reviews %}
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="username"> {{ review[0] }}</div>
+                            <div class="stars">
+                                {% for _ in range(review[2]) %}
+                                    <span class="star">&#9733;</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="user-review">
+                            <div class="review-text">Review: {{ review[1] }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No reviews available</p>
+        {% endif %}
+    </div>
+    
+
+    
+
+    
+    <script>
+        function showOrders() {
+            var ordersTable = document.getElementById("orders");
+            var reviewForm = document.getElementById("review-form");
+            var addressContainer = document.getElementById("address-container");
+            var reviewsContainer = document.getElementById("reviews-container");
+
+            ordersTable.style.display = "table";
+            reviewForm.style.display = "none";
+            addressContainer.style.display = "none";
+            reviewsContainer.style.display = "none";
+        }
+
+        function showReviewForm() {
+            var ordersTable = document.getElementById("orders");
+            var reviewForm = document.getElementById("review-form");
+            var addressContainer = document.getElementById("address-container");
+            var reviewsContainer = document.getElementById("reviews-container");
+
+            ordersTable.style.display = "none";
+            reviewForm.style.display = "block";
+            addressContainer.style.display = "none";
+            reviewsContainer.style.display = "none";
+        }
+
+        function showAddresses() {
+            var ordersTable = document.getElementById("orders");
+            var reviewForm = document.getElementById("review-form");
+            var addressContainer = document.getElementById("address-container");
+            var reviewsContainer = document.getElementById("reviews-container");
+
+            ordersTable.style.display = "none";
+            reviewForm.style.display = "none";
+            addressContainer.style.display = "block";
+            reviewsContainer.style.display = "none";
+            introImage.style.display = "none";
+        }
+
+        function showReviews() {
+            var ordersTable = document.getElementById("orders");
+            var reviewForm = document.getElementById("review-form");
+            var addressContainer = document.getElementById("address-container");
+            var reviewsContainer = document.getElementById("reviews-container");
+    
+            ordersTable.style.display = "none";
+            reviewForm.style.display = "none";
+            addressContainer.style.display = "none";
+            reviewsContainer.style.display = "block"; // Display the reviews container
+        }
+        
+        
+        
+    </script>
+</body>
+</html>

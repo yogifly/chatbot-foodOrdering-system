@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&family=Oswald:wght@600&display=swap" rel="stylesheet">
+    <title>DELISH</title>
+</head>
+<body>
+<style>
+    body {
+            font-family: Oswald, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('static/img/backadmin.jpg'); /* Add your background image URL */
+    background-size: cover; /* Cover the entire background */
+    background-repeat: no-repeat;
+            
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(249, 242, 242, 0);
+            padding-top: 50px; /* Adjust the padding to center the heading vertically */
+        }
+
+        table {
+            color: black;
+            width: 60%; /* Set the width of the table */
+            margin: 20px auto; /* Center the table horizontally with some space around it */
+            border-collapse: collapse; /* Collapse borders for better styling */
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Add a transparent border around the table */
+           
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow to the table */
+            text-align: center;
+            background-image: url('static/img/order3.jpeg'); /* Add your background image URL */
+    background-size: cover; /* Cover the entire background */
+    background-repeat: no-repeat;
+        }
+
+        th, td {
+            font-family: Arial, sans-serif;
+            padding: 5px; /* Add padding to cells for better spacing */
+            border: 1px solid rgba(0, 0, 0, 0.5); /* Add borders to cells with transparency */
+        }
+
+        th {
+             /* Add a semi-transparent background color to header cells */
+            text-align: center; /* Align text in header cells to the left */
+        }
+
+       
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.6); /* Change background color on hover with transparency */
+        }
+
+        .logo img {
+            width: 75px;
+            height: 75px;
+            margin-left: 60px;
+            border-radius: 50%;
+}
+ul {
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        li a {
+            text-decoration: none;
+            color:#FFEC9E;
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0 40px;
+            transition: color 0.3s;
+        }
+
+        li a:hover {
+            color: #FFFBDA;
+        }
+nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            font-family: "Oswald", sans-serif;
+        }
+</style>
+
+<nav>
+    <div class="logo">
+        <img src="static/img/logo.jpg" alt="Logo">
+    </div>
+    <ul>
+        <li><a href="/admin_user" class="active">User</a></li>
+        <li><a href="/admin_orders">Order</a></li>
+        <li><a href="/admin_status">Status</a></li>
+        <li><a href="/sendmail">Email</a></li>
+                <li><a href="/">logout</a></li>
+    </ul>
+</nav>
+    <h1>Admin Orders</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

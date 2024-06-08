@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Form</title>
+</head>
+<body>
+
+<!-- Order Form -->
+<form action="/process_order" method="post">
+    <!-- Your form fields here -->
+    <label for="order_id">Order ID:</label><br>
+    <input type="text" id="order_id" name="order_id" value="{{ order_id }}" readonly><br>
+    <label for="amount">Amount:</label><br>
+    <input type="number" id="amount" name="amount" class="payment-input" value="{{ amount }}" readonly><br>
+    <label for="total_cost">Total Cost:</label><br>
+    <input type="text" id="total_cost" name="total_cost" value="{{ total_cost }}" readonly><br>
+    <label for="cart_items">Cart Items:</label><br>
+    <textarea id="item" name="item" readonly>{{ item }}</textarea><br>
+    <button type="submit">Submit Order</button>
+</form>
+
+<!-- Download Form Button -->
+<a href="/download_form" class="btn btn-primary">Download Form</a>
+
+<!-- Send Mail Button -->
+<a href="/send_mail" class="btn btn-primary">Send Mail</a>
+
+</body>
+</html>
